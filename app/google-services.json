@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "988740362065",
+    "firebase_url": "https://brsons-94010.firebaseio.com",
+    "project_id": "brsons-94010",
+    "storage_bucket": "brsons-94010.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988740362065:android:e5c42ad110c09dff29fd70",
+        "android_client_info": {
+          "package_name": "com.example.brsons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988740362065-1f2em9o7ebs23if2s525vdtqoe2dn01o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_KeABjOsocZ6Hf-Y4LhKKE9c5YpaT_BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988740362065-1f2em9o7ebs23if2s525vdtqoe2dn01o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
