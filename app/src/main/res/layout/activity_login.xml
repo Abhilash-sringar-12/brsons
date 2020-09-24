@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     android:padding="20dp"
     tools:context=".LoginActivity">
@@ -15,7 +15,7 @@
         android:layout_above="@id/emailTip"
         android:layout_centerHorizontal="true"
         android:background="@drawable/round_background"
-        android:src="@drawable/profile" />
+        android:src="@drawable/profile"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTip"
@@ -29,11 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+            android:drawableStart="@drawable/ic_mail_outline_black_24dp"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
+            android:drawablePadding="5dp"
             android:maxLines="1"
-            android:paddingStart="5dp"
             android:singleLine="true"
             android:textColor="@color/colorWhite" />
 
@@ -45,20 +45,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/emailTip"
         android:layout_centerInParent="true"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+            android:drawableStart="@drawable/ic_lock_outline_black_24dp"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
+            android:drawablePadding="5dp"
             android:maxLines="1"
-            android:paddingStart="5dp"
             android:singleLine="true"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
