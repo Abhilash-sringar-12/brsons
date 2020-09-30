@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Categories">
+        <item>Please select the Category</item>
+        <item>Gold</item>
+        <item>Silver</item>
+        <item>Diamond</item>
+        <item>Platinum</item>
+    </string-array>
+
+    <string-array name="SubCategories">
+        <item>Please select the Sub Category</item>
+        <item>Ear Rings</item>
+        <item>Necklace</item>
+        <item>Bracelets</item>
+    </string-array>
+</resources>

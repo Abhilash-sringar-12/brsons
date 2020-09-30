@@ -154,9 +154,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (Optional.ofNullable(authStateListener).isPresent()) {
-                firebaseAuth.removeAuthStateListener(authStateListener);
+                firebaseAuth.addAuthStateListener(authStateListener);
             }
         }
     }
-
 }

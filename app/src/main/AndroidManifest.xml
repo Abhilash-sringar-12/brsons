@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.brsons">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,24 +12,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".models.ResetPasswordActivity" />
+        <activity android:name="com.example.brsons.models.ResetPasswordActivity" />
+        <activity android:name="com.example.brsons.models.ImageViewActivity" />
+        <activity android:name="com.example.brsons.models.ImageUploadActivity" />
+        <activity android:name="com.example.brsons.models.EnquireFormActivity" />
+        <activity android:name="com.example.brsons.models.EnquiredUserActivity" />
         <activity
-            android:name=".models.LoginActivity"
+            android:name="com.example.brsons.models.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".models.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
+            android:name="com.example.brsons.models.MainActivity"
+            android:label="Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
