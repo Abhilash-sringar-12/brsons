@@ -1,0 +1,33 @@
+
+o
+java:S1450&"ZRemove the "buttonLogin" field and declare it as a local variable in the relevant methods.(ñ±k
+Q
+java:S1128"4Remove this unused import 'android.widget.EditText'.(†Å›Ú8ƒÁÍ.
+Q
+java:S1128"4Remove this unused import 'android.content.Context'.(©Ê‰è8‹í£ÀÍ.
+O
+java:S1128"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8‹í£ÀÍ.
+V
+java:S1128
+"4Remove this unused import 'android.net.NetworkInfo'.(«¸”ıøÿÿÿÿ8‹í£ÀÍ.
+I
+java:S1874M",Remove this use of "show"; it is deprecated.(‚ÌÍ8××å¿Í.
+[
+java:S1128">Remove this unused import 'android.provider.ContactsContract'.(üç§±8Í¸èÀÍ.
+V	java:S110""<This class has 9 parents which is greater than 5 authorized.(·¡ïõøÿÿÿÿ
+L
+java:S1874("6Remove this use of "ProgressDialog"; it is deprecated.(Ó¾õ
+t
+java:S3776,"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¨Œşÿÿÿÿ8ÉôìÁÍ.
+Q
+java:S1066;"/Merge this if statement with the enclosing one.(¼Ùš¨şÿÿÿÿ8ÉôìÁÍ.
+R
+java:S1066œ"/Merge this if statement with the enclosing one.(×†ôœûÿÿÿÿ8¼¶ßÁÍ.
+P
+java:S1659%".Declare "editTextPassword" on a separate line.(Ï€¢úÿÿÿÿ8ƒ¨¾¿Í.
+S
+java:S1874M"6Remove this use of "ProgressDialog"; it is deprecated.(‚ÌÍ8××å¿Í.
+w
+java:S1450'"\Remove the "resetPassword" field and declare it as a local variable in the relevant methods.(³ÿÓÊûÿÿÿÿ
+W
+java:S1128	"<Remove this unused import 'android.net.ConnectivityManager'.(ŒñK8‹í£ÀÍ.
