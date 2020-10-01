@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +15,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:id="@+id/ShowImageView"
         android:layout_below="@+id/textview"
         android:layout_marginTop="20dp"/>
@@ -119,7 +123,6 @@
         android:id="@+id/ButtonUploadImage"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/reset_password"
         android:layout_margin="20dp"
         android:background="@drawable/button_background"
         android:text="Upload"
@@ -127,3 +130,4 @@
         android:textSize="16sp" />
 
 </LinearLayout>
+</ScrollView>

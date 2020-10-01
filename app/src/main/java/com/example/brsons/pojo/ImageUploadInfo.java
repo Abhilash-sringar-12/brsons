@@ -1,4 +1,4 @@
-package com.example.brsons;
+package com.example.brsons.pojo;
 
 import android.net.Uri;
 

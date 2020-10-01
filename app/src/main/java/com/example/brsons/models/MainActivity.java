@@ -1,18 +1,10 @@
 package com.example.brsons.models;
-
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.brsons.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
