@@ -9,6 +9,8 @@
 
   <string name="hello_first_fragment">Hello first fragment</string>
   <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+  <!-- Strings used in login and reset password activity -->
   <string name="title_activity_login">LoginActivity</string>
   <string name="prompt_email">Email</string>
   <string name="prompt_password">Password</string>
@@ -20,6 +22,22 @@
   <string name="login_failed">"Login failed"</string>
   <string name="logout_btn">Logout</string>
 
+  <!-- Strings used in main activity -->
+  <string name="text_tab1">Jewelry designs</string>
+  <string name="text_view1">Check your Jewelry design</string>
+  <string name="text_tab2">Upload Jewelry</string>
+  <string name="text_view2">Upload Jewelry designs</string>
+  <string name="text_tab3">Enquiry</string>
+  <string name="text_view3">Enquiry of the Jewelry</string>
+  <string name="text_tab4">Contacted persons</string>
+  <string name="text_view4">Details of the customer contacted</string>
+
+  <!-- Strings used in upload image activity -->
   <string name="Category">Category</string>
   <string name="SubCategory">Sub Category</string>
+  <string name="choose_btn">Choose Image</string>
+  <string name="name">Name</string>
+  <string name="checkbox">Latest Product</string>
+  <string name="upload_btn">Upload</string>
+
 </resources>

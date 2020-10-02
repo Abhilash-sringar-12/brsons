@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".models.MainActivity"
+    tools:context="com.example.brsons.models.MainActivity"
     android:orientation="vertical"
     android:background="@drawable/background">
 
@@ -40,7 +40,8 @@
             android:layout_gravity="fill"
             app:cardBackgroundColor="#FDD835"
             app:cardUseCompatPadding="true"
-            app:cardCornerRadius="8dp">
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
             <LinearLayout
                 android:paddingTop="5dp"
                 android:layout_width="match_parent"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_margin="5dp"
-                    android:text="Jewelry"/>
+                    android:text="@string/text_tab1"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -67,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Check your Jewelry design"
+                    android:text="@string/text_view1"
                     android:padding="5dp"
                     android:textColor="@color/colorBlack"/>
             </LinearLayout>
@@ -82,7 +83,8 @@
             app:cardBackgroundColor="#FDD835"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
-            android:layout_gravity="fill">
+            android:layout_gravity="fill"
+            android:focusable="true">
             <LinearLayout
                 android:paddingTop="5dp"
                 android:layout_width="match_parent"
@@ -100,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_margin="5dp"
-                    android:text="Upload Jewelry"/>
+                    android:text="@string/text_tab2"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -109,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Upload Jewelry designs"
+                    android:text="@string/text_view2"
                     android:padding="5dp"
                     android:textColor="@color/colorBlack"/>
             </LinearLayout>
@@ -153,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_margin="5dp"
-                    android:text="Enquiry"/>
+                    android:text="@string/text_tab3"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -162,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Enquiry of the Jewelry"
+                    android:text="@string/text_view3"
                     android:padding="5dp"
                     android:textColor="@color/colorBlack"/>
             </LinearLayout>
@@ -178,7 +180,8 @@
             app:cardBackgroundColor="#FDD835"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
-            android:layout_gravity="fill">
+            android:layout_gravity="fill"
+            android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -196,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_margin="5dp"
-                    android:text="Contacted persons"/>
+                    android:text="@string/text_tab4"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -205,7 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Details of the customer contacted"
+                    android:text="@string/text_view4"
                     android:textColor="@color/colorBlack"
                     android:padding="5dp"/>
             </LinearLayout>
