@@ -1,0 +1,33 @@
+
+X	java:S110&"<This class has 9 parents which is greater than 5 authorized.(Éµá8èÚÚ‘Î.
+n	java:S117Œ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿª¦„8èÚÚ‘Î.
+s	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ–µÃşÿÿÿÿ8èÚÚ‘Î.
+m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Ï”a8èÚÚ‘Î.
+s	java:S117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ‘Ñåøÿÿÿÿ8èÚÚ‘Î.
+G
+java:S1659+"*Declare "UploadButton" on a separate line.(ÑˆÎÔ8èÚÚ‘Î.
+K
+java:S1659.".Declare "ImageSubCategory" on a separate line.(÷¶êÉ8èÚÚ‘Î.
+x	java:S116("WRename this field "Storage_Path" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºœõúÿÿÿÿ8èÚÚ‘Î.
+t	java:S116)"XRename this field "Database_Path" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ß™™8èÚÚ‘Î.
+s	java:S116+"WRename this field "ChooseButton" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑˆÎÔ8èÚÚ‘Î.
+s	java:S116+"WRename this field "UploadButton" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑˆÎÔ8èÚÚ‘Î.
+p	java:S116,"TRename this field "ImageName" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”şÙê8èÚÚ‘Î.
+r	java:S116-"VRename this field "SelectImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ÿîŞ8èÚÚ‘Î.
+t	java:S116."XRename this field "ImageCategory" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷¶êÉ8èÚÚ‘Î.
+w	java:S116."[Rename this field "ImageSubCategory" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷¶êÉ8èÚÚ‘Î.
+y	java:S116/"XRename this field "LatestProduct" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùÊ©ıÿÿÿÿ8èÚÚ‘Î.
+r	java:S1160"VRename this field "FilePathUri" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“§˜ğ8èÚÚ‘Î.
+x	java:S1163"]Rename this field "Image_Request_Code" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¡Ş78èÚÚ‘Î.
+C
+java:S1170("!Make this final field static too.(ºœõúÿÿÿÿ8èÚÚ‘Î.
+>
+java:S1170)"!Make this final field static too.(»ß™™8èÚÚ‘Î.
+S
+java:S18744"6Remove this use of "ProgressDialog"; it is deprecated.(ğİıº8èÚÚ‘Î.
+S
+java:S1874A"6Remove this use of "ProgressDialog"; it is deprecated.(ãÊåÖ8èÚÚ‘Î.
+S
+java:S1874h"1Remove this use of "getBitmap"; it is deprecated.(‡Âôòüÿÿÿÿ8èÚÚ‘Î.
+o	java:S100w"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌŞ…Şøÿÿÿÿ8èÚÚ‘Î.
+p	java:S100€"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(†¦§úıÿÿÿÿ8èÚÚ‘Î.

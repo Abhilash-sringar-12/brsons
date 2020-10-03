@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,13 +30,10 @@ import java.util.List;
 public class ImageViewActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-
     private DatabaseReference databaseReference;
-
     List<ImageUploadInfo> list = new ArrayList<>();
-
+    SearchView searchView;
     private RecyclerView.Adapter recyclerAdapter;
-
     ProgressDialog progressDialog;
 
 
@@ -43,25 +41,15 @@ public class ImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
-
+        searchView = findViewById(R.id.searchJewelry);
         recyclerView = findViewById(R.id.recyclerView);
-
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-
         progressDialog = new ProgressDialog(ImageViewActivity.this);
-
         progressDialog.setMessage("Loading Images..");
-
         progressDialog.show();
-
-        //Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference(ImageUploadActivity.Database_Path);
-
-        // get data method
         GetDataFromFirebase();
-
     }
 
     private void GetDataFromFirebase() {
@@ -69,23 +57,32 @@ public class ImageViewActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ImageUploadInfo imageUploadInfo = snapshot.getValue(ImageUploadInfo.class);
-
                     list.add(imageUploadInfo);
                 }
-
                 recyclerAdapter = new RecyclerAdapter(getApplicationContext(), list);
-
                 recyclerView.setAdapter(recyclerAdapter);
-
                 progressDialog.dismiss();
+                final RecyclerAdapter adapter = new RecyclerAdapter(ImageViewActivity.this, list);
+                recyclerView.setAdapter(adapter);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        adapter.getFilter().filter(query);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        adapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
                 progressDialog.dismiss();
 
             }
