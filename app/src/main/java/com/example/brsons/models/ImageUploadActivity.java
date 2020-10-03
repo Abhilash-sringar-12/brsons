@@ -38,7 +38,7 @@ import java.util.Optional;
 public class ImageUploadActivity extends AppCompatActivity {
 
     final String Storage_Path = "Jewellery_Image/";
-    final String Database_Path = "Jewelleries";
+    static final String Database_Path = "Jewelleries";
     String imageLatest;
     Button ChooseButton, UploadButton;
     EditText ImageName;
