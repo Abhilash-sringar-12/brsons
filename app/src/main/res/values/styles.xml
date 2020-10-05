@@ -5,7 +5,6 @@
         <item name="colorPrimary">@color/colorGold</item>
         <item name="colorPrimaryDark">@color/colorLightBlack</item>
         <item name="colorAccent">@color/colorGold</item>
-
         <item name="android:textColorHint">@color/colorGold</item>
     </style>
 
@@ -17,5 +16,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

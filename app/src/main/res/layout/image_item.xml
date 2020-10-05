@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
-    android:layout_height="190dp"
+    android:layout_width="130dp"
+    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     app:cardCornerRadius="4dp">
@@ -10,7 +10,8 @@
         android:orientation="vertical"
         android:id="@+id/jewelryList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
         
         <ImageView
             android:id="@+id/jewel_image"
@@ -21,10 +22,10 @@
         
         <TextView
             android:id="@+id/textView"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorGold"
             android:gravity="center"/>
 
     </LinearLayout>

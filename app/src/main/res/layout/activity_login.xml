@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 <LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     android:orientation="vertical"
     android:gravity="center"
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:drawableEnd="@drawable/ic_mail_outline_black_24dp"
-            android:inputType="textEmailAddress"
             android:drawablePadding="5dp"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/colorAccent" />
