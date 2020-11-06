@@ -9,16 +9,18 @@ public class ImageUploadInfo {
     private String imageName;
     private String imageCategory;
     private String imageSubCategory;
+    private String imageSubCategory1;
     private String imageURL;
     private String imageLatest;
 
     public ImageUploadInfo() {
     }
 
-    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName,String imageLatest, String imageURL) {
+    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName, String tempSubCategoryName1, String imageLatest, String imageURL) {
         this.imageName = tempImageName;
         this.imageCategory = tempCategoryName;
         this.imageSubCategory = tempSubCategoryName;
+        this.imageSubCategory1 = tempSubCategoryName1;
         this.imageLatest = imageLatest;
         this.imageURL = imageURL;
     }
@@ -45,6 +47,14 @@ public class ImageUploadInfo {
 
     public void setImageSubCategory(String imageSubCategory) {
         this.imageSubCategory = imageSubCategory;
+    }
+
+    public String getImageSubCategory1() {
+        return imageSubCategory1;
+    }
+
+    public void setImageSubCategory1(String imageSubCategory1) {
+        this.imageSubCategory1 = imageSubCategory1;
     }
 
     public String getImageURL() {

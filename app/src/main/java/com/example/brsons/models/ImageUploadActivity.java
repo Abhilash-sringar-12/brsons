@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -39,11 +41,11 @@ public class ImageUploadActivity extends AppCompatActivity {
 
     final String Storage_Path = "Jewellery_Image/";
     static final String Database_Path = "Jewelleries";
-    String imageLatest;
+    String imageLatest, selectedCategory, selectedSubCategory, selectedSubCategory1, selectedSubCategory2;
     Button ChooseButton, UploadButton;
     EditText ImageName;
     ImageView SelectImage;
-    Spinner ImageCategory, ImageSubCategory;
+    Spinner ImageCategory, ImageSubCategory, ImageSubCategory1, ImageSubCategory2;
     CheckBox LatestProduct;
     Uri FilePathUri;
     StorageReference storageReference;
@@ -60,6 +62,7 @@ public class ImageUploadActivity extends AppCompatActivity {
         ImageName = (EditText) findViewById(R.id.ImageNameEditText);
         ImageCategory = (Spinner) findViewById(R.id.spinnerCategory);
         ImageSubCategory = (Spinner) findViewById(R.id.spinnerSubCategory);
+        ImageSubCategory1 = (Spinner) findViewById(R.id.spinnerSubCategory1);
         LatestProduct = (CheckBox) findViewById(R.id.checkBox);
         SelectImage = (ImageView) findViewById(R.id.ShowImageView);
         progressDialog = new ProgressDialog(ImageUploadActivity.this);
@@ -88,11 +91,121 @@ public class ImageUploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     UploadImageFileToFirebaseStorage();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        ImageCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                String selectedCategory = parent.getItemAtPosition(i).toString();
+                switch (selectedCategory) {
+                    case "Gold":
+                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item,getResources()
+                                .getStringArray(R.array.Category_gold)));
+                        ImageSubCategory.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Silver":
+                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item,getResources()
+                                .getStringArray(R.array.Category_silver)));
+                        ImageSubCategory.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Platinum":
+                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item,getResources()
+                                .getStringArray(R.array.Category_platinum)));
+                        ImageSubCategory.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Diamond":
+                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item,getResources()
+                                .getStringArray(R.array.Category_daimond)));
+                        ImageSubCategory.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ImageSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                 selectedSubCategory = parent.getItemAtPosition(i).toString();
+
+                switch (selectedSubCategory) {
+                    case "Jewellery":
+                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, getResources()
+                                .getStringArray(R.array.Category_gold)));
+                        //ImageSubCategory.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Articles":
+                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, getResources()
+                                .getStringArray(R.array.Category_silver_articles)));
+                        ImageSubCategory1.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Men":
+                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, getResources()
+                                .getStringArray(R.array.Category_sub_men)));
+                        ImageSubCategory1.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Women":
+                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, getResources()
+                                .getStringArray(R.array.Category_sub_women)));
+                        ImageSubCategory1.setVisibility(View.VISIBLE);
+                        break;
+
+                    case "Children":
+                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, getResources()
+                                .getStringArray(R.array.Category_sub_children)));
+                        ImageSubCategory1.setVisibility(View.VISIBLE);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ImageSubCategory1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                 selectedSubCategory1 = parent.getItemAtPosition(i).toString();
+
+                Toast.makeText(ImageUploadActivity.this, "\n Category: \t " + selectedCategory +
+                        "\n SubCategory: \t" + selectedSubCategory + "\n SubCategory: \t" + selectedSubCategory1
+                        ,Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override
@@ -123,7 +236,7 @@ public class ImageUploadActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to store the uploaded image in fire base storeage location
+     * Method to store the uploaded image in fire base storage location
      */
     public void UploadImageFileToFirebaseStorage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Optional.ofNullable(FilePathUri).isPresent()) {
@@ -140,12 +253,14 @@ public class ImageUploadActivity extends AppCompatActivity {
                                     String TempImageName = ImageName.getText().toString().trim();
                                     String TempCategoryName = ImageCategory.getSelectedItem().toString().trim();
                                     String TempSubCategoryName = ImageSubCategory.getSelectedItem().toString().trim();
+                                    String TempSubCategoryName1 = ImageSubCategory1.getSelectedItem().toString().trim();
                                     if (LatestProduct.isChecked()) {
                                         imageLatest = LatestProduct.getText().toString().trim();
                                     }
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                    ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, TempCategoryName, TempSubCategoryName, imageLatest, uri.toString());
+                                    ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, TempCategoryName,
+                                            TempSubCategoryName,TempSubCategoryName1, imageLatest, uri.toString());
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                                 }
@@ -161,11 +276,10 @@ public class ImageUploadActivity extends AppCompatActivity {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.setTitle("Image is Uploading...");
-
                 }
             });
         }
-        Toast.makeText(ImageUploadActivity.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+       startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
     }
 }
 
