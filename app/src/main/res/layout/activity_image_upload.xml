@@ -51,73 +51,52 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp">
 
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorGold"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:entries="@array/Categories"
                 android:prompt="@string/Category"
                 android:spinnerMode="dropdown"
-                android:popupBackground="@color/colorGold"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/ic_arrow_drop_down_24" />
+                android:popupBackground="@color/colorGold"
+                style="@style/SpinnerTheme"/>
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp">
 
             <Spinner
                 android:id="@+id/spinnerSubCategory"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorGold"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:visibility="gone"
                 android:spinnerMode="dropdown"
-                android:popupBackground="@color/colorGold"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/ic_arrow_drop_down_24" />
+                android:popupBackground="@color/colorGold"
+                style="@style/SpinnerTheme"/>
 
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp">
 
             <Spinner
                 android:id="@+id/spinnerSubCategory1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorGold"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:visibility="gone"
                 android:spinnerMode="dropdown"
-                android:popupBackground="@color/colorGold"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/ic_arrow_drop_down_24" />
+                android:popupBackground="@color/colorGold"
+                style="@style/SpinnerTheme"/>
 
         </RelativeLayout>
 

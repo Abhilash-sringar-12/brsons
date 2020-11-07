@@ -40,6 +40,7 @@
         <item>Lamps</item>
         <item>Bowls</item>
         <item>Gift Articles</item>
+        <item>Others</item>
     </string-array>
 
     <string-array name="Category_sub_men">
