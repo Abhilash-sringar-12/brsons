@@ -1,56 +1,57 @@
 <resources>
-  <string name="app_name">brsons</string>
-  <string name="action_settings">Settings</string>
-  <!-- Strings used for fragments for navigation -->
-  <string name="first_fragment_label">First Fragment</string>
-  <string name="second_fragment_label">Second Fragment</string>
-  <string name="next">Next</string>
-  <string name="previous">Previous</string>
+    <string name="app_name">brsons</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
-  <string name="hello_first_fragment">Hello first fragment</string>
-  <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-  <!-- Strings used in login and reset password activity -->
-  <string name="title_activity_login">LoginActivity</string>
-  <string name="prompt_email">Email</string>
-  <string name="prompt_password">Password</string>
-  <string name="forgot_password">Forgot Password? Click here to reset</string>
-  <string name="reset_password">Forgot Password?</string>
-  <string name="login_btn">Login</string>
-  <string name="submit_btn">Submit</string>
-  <string name="welcome">"Welcome !"</string>
-  <string name="login_failed">"Login failed"</string>
-  <string name="logout_btn">Logout</string>
+    <!-- Strings used in login and reset password activity -->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="forgot_password">Forgot Password? Click here to reset</string>
+    <string name="reset_password">Forgot Password?</string>
+    <string name="login_btn">Login</string>
+    <string name="submit_btn">Submit</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="logout_btn">Logout</string>
 
-  <!-- Strings used in main activity -->
-  <string name="text_tab1">Jewelry designs</string>
-  <string name="text_view1">Check your Jewelry design</string>
-  <string name="text_tab2">Upload Jewelry</string>
-  <string name="text_view2">Upload Jewelry designs</string>
-  <string name="text_tab3">Quotation Form</string>
-  <string name="text_view3">Quotation generator of the Jewelry</string>
-  <string name="text_tab4">Contacted persons</string>
-  <string name="text_view4">Details of the customer contacted</string>
+    <!-- Strings used in main activity -->
+    <string name="text_tab1">Jewelry designs</string>
+    <string name="text_view1">Check your Jewelry design</string>
+    <string name="text_tab2">Upload Jewelry</string>
+    <string name="text_view2">Upload Jewelry designs</string>
+    <string name="text_tab3">Quotation Form</string>
+    <string name="text_view3">Quotation generator of the Jewelry</string>
+    <string name="text_tab4">Contacted persons</string>
+    <string name="text_view4">Details of the customer contacted</string>
 
-  <!-- Strings used in upload image activity -->
-  <string name="Category">Category</string>
-  <string name="SubCategory">Sub Category</string>
-  <string name="choose_btn">Choose Image</string>
-  <string name="name">Name</string>
-  <string name="checkbox">Latest Product</string>
-  <string name="upload_btn">Upload</string>
+    <!-- Strings used in upload image activity -->
+    <string name="Category">Category</string>
+    <string name="SubCategory">Sub Category</string>
+    <string name="choose_btn">Choose Image</string>
+    <string name="name">Name</string>
+    <string name="checkbox">Latest Product</string>
+    <string name="upload_btn">Upload</string>
 
-  <!-- Strings used in Quotation form -->
-  <string name="quotation">Quotation Form</string>
-  <string name="customer">Customer</string>
-  <string name="email">Email</string>
-  <string name="product">Product</string>
-  <string name="grams">Grams</string>
-  <string name="price_gram">Price/gram</string>
-  <string name="gst">GST</string>
-  <string name="amount">Amount</string>
-  <string name="total">Total Amount</string>
-  <string name="generateBtn">Generate PDF</string>
-  <string name="openBtn">Open PDF</string>
+    <!-- Strings used in Quotation form -->
+    <string name="quotation">Quotation Form</string>
+    <string name="customer">Customer</string>
+    <string name="email">Email</string>
+    <string name="product">Product</string>
+    <string name="grams">Grams</string>
+    <string name="price_gram">Price/gram</string>
+    <string name="gst">GST</string>
+    <string name="amount">Amount</string>
+    <string name="total">Total Amount</string>
+    <string name="generateBtn">Generate PDF</string>
+    <string name="openBtn">Open PDF</string>
+    <string name="title_activity_splash_screen">splashScreen</string>
 
 </resources>

@@ -4,34 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/launcher_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@drawable/launcher_logo"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
-        <activity android:name="com.example.brsons.models.ResetPasswordActivity" />
-        <activity android:name="com.example.brsons.models.ImageViewActivity" />
-        <activity android:name="com.example.brsons.models.ImageUploadActivity" />
-        <activity android:name="com.example.brsons.models.EnquireFormActivity" />
-        <activity android:name="com.example.brsons.models.EnquiredUserActivity" />
         <activity
-            android:name="com.example.brsons.models.LoginActivity"
+            android:name=".models.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +24,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".models.ResetPasswordActivity" />
+        <activity android:name=".models.ImageViewActivity" />
+        <activity android:name=".models.ImageUploadActivity" />
+        <activity android:name=".models.EnquireFormActivity" />
+        <activity android:name=".models.EnquiredUserActivity" />
         <activity
-            android:name="com.example.brsons.models.MainActivity"
+            android:name=".models.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".models.MainActivity"
             android:label="Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

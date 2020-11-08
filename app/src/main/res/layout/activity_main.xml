@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/background">
+    android:background="@color/colorBlack">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:layout_height="190dp"
             android:layout_margin="10dp"
             android:layout_gravity="fill"
-            app:cardBackgroundColor="#FDD835"
+            app:cardBackgroundColor="@color/colorAccent"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
             android:focusable="true">
@@ -85,7 +85,7 @@
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="#FDD835"
+            app:cardBackgroundColor="@color/colorAccent"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
             android:layout_gravity="fill"
@@ -139,7 +139,7 @@
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="#FDD835"
+            app:cardBackgroundColor="@color/colorAccent"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
             android:layout_gravity="fill">
@@ -182,7 +182,7 @@
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="#FDD835"
+            app:cardBackgroundColor="@color/colorAccent"
             app:cardUseCompatPadding="true"
             app:cardCornerRadius="8dp"
             android:layout_gravity="fill"

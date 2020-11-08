@@ -8,7 +8,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background"
+    android:background="@color/colorBlack"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp"
@@ -18,8 +18,7 @@
         android:id="@+id/profile"
         android:layout_width="125dp"
         android:layout_height="125dp"
-        android:background="@drawable/round_background"
-        android:src="@drawable/profile"/>
+        android:src="@drawable/logo"/>
 
     <com.google.android.material.textfield.TextInputLayout
 
@@ -35,40 +34,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:drawableEnd="@drawable/ic_mail_outline_black_24dp"
+            android:drawableEnd="@drawable/ic_baseline_email_24"
             android:drawablePadding="5dp"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
+            android:textColorHint="@color/colorAccent"
             android:textColor="@color/colorAccent" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/password"
         android:layout_width="match_parent"
+        android:id="@+id/password"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:hint="@string/prompt_password"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="246dp"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorAccent">
-
+        app:passwordToggleTint="@color/colorAccent"
+        android:focusable="true"
+        android:layout_marginTop="30dp"
+        android:hint="Password"
+        android:focusableInTouchMode="true"
+        android:textColorHint="@color/colorAccent">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:drawableEnd="@drawable/ic_lock_outline_black_24dp"
+            android:ems="10"
             android:inputType="textPassword"
-            android:drawablePadding="5dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/colorAccent"/>
-
+            android:textColor="@color/colorAccent"
+            android:textSize ="20sp"/>
     </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
         android:id="@+id/reset_password"
         android:layout_width="match_parent"
