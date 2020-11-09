@@ -27,49 +27,62 @@ import com.example.brsons.pojo.ImageUploadInfo;
 import com.example.brsons.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Optional;
 
 public class ImageUploadActivity extends AppCompatActivity {
 
     final String Storage_Path = "Jewellery_Image/";
     static final String Database_Path = "Jewelleries";
+    static final String OPTIONS = "Options";
     String imageLatest, selectedCategory, selectedSubCategory, selectedSubCategory1, selectedSubCategory2;
-    Button ChooseButton, UploadButton;
-    EditText ImageName;
-    ImageView SelectImage;
-    Spinner ImageCategory, ImageSubCategory, ImageSubCategory1, ImageSubCategory2;
-    CheckBox LatestProduct;
-    Uri FilePathUri;
+    Button chooseButton, uploadButton;
+    EditText imageName;
+    ImageView selectImage;
+    Spinner imageCategory, imageSubCategory, imageSubCategory1, imageSubCategory2;
+    CheckBox latestProduct;
+    Uri filePathUri;
     StorageReference storageReference;
     DatabaseReference databaseReference;
+    DatabaseReference optionsReference;
     int Image_Request_Code = 7;
     ProgressDialog progressDialog;
+    List<String> mainCategoryKeys = new ArrayList();
+    Map<String, Map<String, List<String>>> optionsMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
-        ChooseButton = (Button) findViewById(R.id.ButtonChooseImage);
-        UploadButton = (Button) findViewById(R.id.ButtonUploadImage);
-        ImageName = (EditText) findViewById(R.id.ImageNameEditText);
-        ImageCategory = (Spinner) findViewById(R.id.spinnerCategory);
-        ImageSubCategory = (Spinner) findViewById(R.id.spinnerSubCategory);
-        ImageSubCategory1 = (Spinner) findViewById(R.id.spinnerSubCategory1);
-        LatestProduct = (CheckBox) findViewById(R.id.checkBox);
-        SelectImage = (ImageView) findViewById(R.id.ShowImageView);
+        chooseButton = (Button) findViewById(R.id.ButtonChooseImage);
+        uploadButton = (Button) findViewById(R.id.ButtonUploadImage);
+        imageName = (EditText) findViewById(R.id.ImageNameEditText);
+        imageCategory = (Spinner) findViewById(R.id.spinnerCategory);
+        imageSubCategory = (Spinner) findViewById(R.id.spinnerSubCategory);
+        imageSubCategory1 = (Spinner) findViewById(R.id.spinnerSubCategory1);
+        latestProduct = (CheckBox) findViewById(R.id.checkBox);
+        selectImage = (ImageView) findViewById(R.id.ShowImageView);
         progressDialog = new ProgressDialog(ImageUploadActivity.this);
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
-
-        ChooseButton.setOnClickListener(new View.OnClickListener() {
+        optionsReference = FirebaseDatabase.getInstance().getReference().child(OPTIONS);
+        setMainCategories();
+        chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -83,10 +96,35 @@ public class ImageUploadActivity extends AppCompatActivity {
             }
         });
 
+        imageCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                String selectedCategory = parent.getItemAtPosition(i).toString();
+                setSubCategories(selectedCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        imageSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                String selectedCategory = imageCategory.getSelectedItem().toString().trim();
+                String selectedSubCategory = parent.getItemAtPosition(i).toString();
+                setSuperSubCategories(selectedCategory, selectedSubCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         /**
          * Calling method to upload selected image on Firebase storage.
          */
-        UploadButton.setOnClickListener(new View.OnClickListener() {
+        uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -98,125 +136,17 @@ public class ImageUploadActivity extends AppCompatActivity {
             }
         });
 
-        ImageCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                String selectedCategory = parent.getItemAtPosition(i).toString();
-                switch (selectedCategory) {
-                    case "Gold":
-                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item,getResources()
-                                .getStringArray(R.array.Category_gold)));
-                        ImageSubCategory.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Silver":
-                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item,getResources()
-                                .getStringArray(R.array.Category_silver)));
-                        ImageSubCategory.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Platinum":
-                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item,getResources()
-                                .getStringArray(R.array.Category_platinum)));
-                        ImageSubCategory.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Diamond":
-                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item,getResources()
-                                .getStringArray(R.array.Category_daimond)));
-                        ImageSubCategory.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        ImageSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                 selectedSubCategory = parent.getItemAtPosition(i).toString();
-
-                switch (selectedSubCategory) {
-                    case "Jewellery":
-                        ImageSubCategory.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, getResources()
-                                .getStringArray(R.array.Category_gold)));
-                        //ImageSubCategory.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Articles":
-                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, getResources()
-                                .getStringArray(R.array.Category_silver_articles)));
-                        ImageSubCategory1.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Men":
-                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, getResources()
-                                .getStringArray(R.array.Category_sub_men)));
-                        ImageSubCategory1.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Women":
-                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, getResources()
-                                .getStringArray(R.array.Category_sub_women)));
-                        ImageSubCategory1.setVisibility(View.VISIBLE);
-                        break;
-
-                    case "Children":
-                        ImageSubCategory1.setAdapter(new ArrayAdapter<String>(ImageUploadActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, getResources()
-                                .getStringArray(R.array.Category_sub_children)));
-                        ImageSubCategory1.setVisibility(View.VISIBLE);
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        ImageSubCategory1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                 selectedSubCategory1 = parent.getItemAtPosition(i).toString();
-
-                Toast.makeText(ImageUploadActivity.this, "\n Category: \t " + selectedCategory +
-                        "\n SubCategory: \t" + selectedSubCategory + "\n SubCategory: \t" + selectedSubCategory1
-                        ,Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            FilePathUri = data.getData();
+            filePathUri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), FilePathUri);
-                SelectImage.setImageBitmap(bitmap);
-                ChooseButton.setText("Image Selected");
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathUri);
+                selectImage.setImageBitmap(bitmap);
+                chooseButton.setText("Image Selected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -239,28 +169,28 @@ public class ImageUploadActivity extends AppCompatActivity {
      * Method to store the uploaded image in fire base storage location
      */
     public void UploadImageFileToFirebaseStorage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Optional.ofNullable(FilePathUri).isPresent()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Optional.ofNullable(filePathUri).isPresent()) {
             progressDialog.setTitle("Image is Uploading...");
             progressDialog.show();
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
-            storageReference2nd.putFile(FilePathUri)
+            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(filePathUri));
+            storageReference2nd.putFile(filePathUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                             storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String TempImageName = ImageName.getText().toString().trim();
-                                    String TempCategoryName = ImageCategory.getSelectedItem().toString().trim();
-                                    String TempSubCategoryName = ImageSubCategory.getSelectedItem().toString().trim();
-                                    String TempSubCategoryName1 = ImageSubCategory1.getSelectedItem().toString().trim();
-                                    if (LatestProduct.isChecked()) {
-                                        imageLatest = LatestProduct.getText().toString().trim();
+                                    String TempImageName = imageName.getText().toString().trim();
+                                    String TempCategoryName = imageCategory.getSelectedItem().toString().trim();
+                                    String TempSubCategoryName = imageSubCategory.getSelectedItem().toString().trim();
+                                    String TempSubCategoryName1 = imageSubCategory1.getSelectedItem().toString().trim();
+                                    if (latestProduct.isChecked()) {
+                                        imageLatest = latestProduct.getText().toString().trim();
                                     }
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
                                     ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, TempCategoryName,
-                                            TempSubCategoryName,TempSubCategoryName1, imageLatest, uri.toString());
+                                            TempSubCategoryName, TempSubCategoryName1, imageLatest, uri.toString());
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                                 }
@@ -279,7 +209,84 @@ public class ImageUploadActivity extends AppCompatActivity {
                 }
             });
         }
-       startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
+        startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
+    }
+
+    /**
+     * to setMain categories and map all the related categories to min categories
+     */
+    public void setMainCategories() {
+        ValueEventListener options = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot mainCategories : snapshot.getChildren()) {
+                    mainCategoryKeys.add(mainCategories.getKey());
+                    addOptions(mainCategoryKeys, imageCategory);
+                    Map<String, List<String>> subCategoriesMap = new HashMap<>();
+                    for (DataSnapshot subCategories : mainCategories.getChildren()) {
+                        List<String> superSubCategoriesList = new ArrayList<>();
+                        if (subCategories.hasChildren()) {
+                            for (DataSnapshot superSubCategories : subCategories.getChildren()) {
+                                superSubCategoriesList.add(superSubCategories.getKey());
+                                subCategoriesMap.put(subCategories.getKey(), superSubCategoriesList);
+                            }
+                        } else {
+                            subCategoriesMap.put(subCategories.getKey(), new ArrayList<String>());
+                        }
+                        optionsMap.put(mainCategories.getKey(), subCategoriesMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        optionsReference.addValueEventListener(options);
+
+    }
+
+    /**
+     * To populate all the subCategories of the selected categories
+     *
+     * @param selectedCategory
+     */
+    public void setSubCategories(String selectedCategory) {
+        List<String> subCategories = new ArrayList<>();
+        for (String optionsKey : optionsMap.get(selectedCategory).keySet()) {
+            subCategories.add(optionsKey);
+        }
+        imageSubCategory.setVisibility(View.VISIBLE);
+        addOptions(subCategories, imageSubCategory);
+    }
+
+    /**
+     * To populate all the superSubCategories of the selected subCategories
+     *
+     * @param selectedSubCategory
+     */
+    public void setSuperSubCategories(String selectedCategory, String selectedSubCategory) {
+        List<String> superSubCategories = new ArrayList<>();
+        for (ListIterator<String> it = optionsMap.get(selectedCategory).get(selectedSubCategory).listIterator(); it.hasNext(); ) {
+            superSubCategories.add(it.next());
+        }
+        if (superSubCategories.size() > 0) {
+            imageSubCategory1.setVisibility(View.VISIBLE);
+            addOptions(superSubCategories, imageSubCategory1);
+        } else {
+            imageSubCategory1.setVisibility(View.GONE);
+        }
+    }
+
+    /*
+    Populate values to spinner
+     */
+    public void addOptions(List<String> keys, Spinner spinner) {
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ImageUploadActivity.this, R.layout.simple_spinner_item, keys);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setPrompt("Categories");
     }
 }
 
