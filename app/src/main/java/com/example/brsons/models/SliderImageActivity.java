@@ -35,8 +35,11 @@ public class SliderImageActivity extends AppCompatActivity {
     final String Storage_Path = "Slider_Image/";
     static final String Database_Path = "Sliders";
     ImageView SliderImage1, SliderImage2, SliderImage3;
-    EditText SliderTitle1,SliderTitle2,SliderTitle3,SliderDes1,SliderDes2,SliderDes3;
-    Uri FilePathUri;
+    EditText SliderTitle1, SliderTitle2, SliderTitle3, SliderDes1, SliderDes2, SliderDes3;
+    Uri FilePathUriOne;
+    Uri FilePathUriTwo;
+    Uri FilePathUriThree;
+
     StorageReference storageReference;
     DatabaseReference databaseReference;
     int Image_Request_Code = 7;
@@ -71,7 +74,7 @@ public class SliderImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -83,7 +86,7 @@ public class SliderImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code1);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -95,7 +98,7 @@ public class SliderImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code2);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -123,21 +126,21 @@ public class SliderImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null) {
-            FilePathUri = data.getData();
-            if (FilePathUri != null) {
-                SliderImage1.setImageURI(FilePathUri);
+            FilePathUriOne = data.getData();
+            if (FilePathUriOne != null) {
+                SliderImage1.setImageURI(FilePathUriOne);
             }
         }
         if (requestCode == Image_Request_Code1 && resultCode == RESULT_OK && data != null) {
-            FilePathUri = data.getData();
-            if (FilePathUri != null) {
-                SliderImage2.setImageURI(FilePathUri);
+            FilePathUriTwo = data.getData();
+            if (FilePathUriTwo != null) {
+                SliderImage2.setImageURI(FilePathUriTwo);
             }
         }
         if (requestCode == Image_Request_Code2 && resultCode == RESULT_OK && data != null) {
-            FilePathUri = data.getData();
-            if (FilePathUri != null) {
-                SliderImage3.setImageURI(FilePathUri);
+            FilePathUriThree = data.getData();
+            if (FilePathUriThree != null) {
+                SliderImage3.setImageURI(FilePathUriThree);
             }
         }
     }
@@ -158,47 +161,127 @@ public class SliderImageActivity extends AppCompatActivity {
      * Method to store the uploaded image in fire base storage location
      */
     private void UploadImageFileToFirebaseStorage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Optional.ofNullable(FilePathUri).isPresent()) {
-            progressDialog.setTitle("Slider Image is Uploading...");
-            progressDialog.show();
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
-            storageReference2nd.putFile(FilePathUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                            storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String TempSliderTitle1 = SliderTitle1.getText().toString().trim();
-                                    String TempSliderTitle2 = SliderTitle2.getText().toString().trim();
-                                    String TempSliderTitle3 = SliderTitle3.getText().toString().trim();
-                                    String TempSliderDesc1 = SliderDes1.getText().toString().trim();
-                                    String TempSliderDesc2 = SliderDes2.getText().toString().trim();
-                                    String TempSliderDesc3 = SliderDes3.getText().toString().trim();
+        progressDialog.setTitle("Slider Image is Uploading...");
+        progressDialog.show();
+        setSliderOneDetails();
+        setSliderTwoDetails();
+        setSliderThreeDetails();
+    }
+    /*
+     set slider attributes
+     */
+    private void setSliderData(String tempSliderTitle, String tempSliderDesc, String uri, String nodeName) {
+        SliderImageInfo sliderImageInfo = new SliderImageInfo(tempSliderTitle, tempSliderDesc,
+                uri);
+        String SliderUploadId = databaseReference.child(nodeName).getKey();
+        databaseReference.child(SliderUploadId).setValue(sliderImageInfo);
+    }
 
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                    SliderImageInfo sliderImageInfo = new SliderImageInfo(TempSliderTitle1, TempSliderTitle2,
-                                            TempSliderTitle3, TempSliderDesc1, TempSliderDesc2,TempSliderDesc3,
-                                            uri.toString(), uri.toString(), uri.toString());
-                                    String SliderUploadId = databaseReference.child("Slider1").getKey();
-                                    databaseReference.child(SliderUploadId).setValue(sliderImageInfo);
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    progressDialog.dismiss();
-                    Toast.makeText(SliderImageActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    progressDialog.setTitle("Slider Image is Uploading...");
-                }
-            });
-        }
-      //  startActivity(new Intent(SliderImageActivity.this, SliderImageActivity.class));
+    /**
+     * set slider 1 details
+     */
+    private void setSliderOneDetails() {
+        final StorageReference storageReference1 = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUriOne));
+        storageReference1.putFile(FilePathUriOne)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String tempSliderTitle1 = SliderTitle1.getText().toString().trim();
+                                String tempSliderDesc1 = SliderDes1.getText().toString().trim();
+                                String tempSliderImageUrl1 = uri.toString();
+                                progressDialog.dismiss();
+                                setSliderData(tempSliderTitle1, tempSliderDesc1, tempSliderImageUrl1, "slider1");
+                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                progressDialog.dismiss();
+                Toast.makeText(SliderImageActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.setTitle("Slider Image is Uploading...");
+            }
+        });
+    }
+    /**
+     * set slider 2 details
+     */
+    private void setSliderTwoDetails() {
+
+        final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUriTwo));
+        storageReference2nd.putFile(FilePathUriTwo)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String tempSliderTitle2 = SliderTitle2.getText().toString().trim();
+                                String tempSliderDesc2 = SliderDes2.getText().toString().trim();
+                                String tempSliderImageUrl2 = uri.toString();
+                                progressDialog.dismiss();
+                                setSliderData(tempSliderTitle2, tempSliderDesc2, tempSliderImageUrl2, "slider2");
+                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                progressDialog.dismiss();
+                Toast.makeText(SliderImageActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.setTitle("Slider Image is Uploading...");
+            }
+        });
+    }
+    /**
+     * set slider 3 details
+     */
+    private void setSliderThreeDetails() {
+
+        final StorageReference storageReference3 = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUriThree));
+        storageReference3.putFile(FilePathUriThree)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference3.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String tempSliderTitle3 = SliderTitle3.getText().toString().trim();
+                                String tempSliderDesc3 = SliderDes3.getText().toString().trim();
+                                String tempSliderImageUrl3 = uri.toString();
+                                progressDialog.dismiss();
+                                setSliderData(tempSliderTitle3, tempSliderDesc3, tempSliderImageUrl3, "slider3");
+                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                progressDialog.dismiss();
+                Toast.makeText(SliderImageActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.setTitle("Slider Image is Uploading...");
+            }
+        });
     }
 }
