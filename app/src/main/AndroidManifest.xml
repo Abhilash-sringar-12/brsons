@@ -39,7 +39,8 @@
         <activity android:name=".models.ImageViewActivity" />
         <activity android:name=".models.ImageUploadActivity" />
         <activity android:name=".models.EnquireFormActivity" />
-        <activity android:name=".models.EnquiredUserActivity" />
+        <activity android:name=".models.RateActivity" />
+        <activity android:name=".models.SliderImageActivity" />
         <activity
             android:name=".models.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">

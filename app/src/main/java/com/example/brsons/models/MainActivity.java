@@ -11,10 +11,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private View image;
-    private View imageUpload;
-    private View enquiry;
-    private View enquiryDetails;
+    private View image, imageUpload, enquiry, sliderImage, rateCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         image = findViewById(R.id.imageView);
         imageUpload = findViewById(R.id.imageUpload);
-        enquiry = findViewById(R.id.enquiry);
-        enquiryDetails = findViewById(R.id.enquiryDetails);
+        enquiry = findViewById(R.id.enquiries);
+        sliderImage = findViewById(R.id.sliderImage);
+        rateCard = findViewById(R.id.rates);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -54,10 +52,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        enquiryDetails.setOnClickListener(new View.OnClickListener() {
+        rateCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EnquiredUserActivity.class);
+                Intent intent = new Intent(MainActivity.this, RateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        sliderImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SliderImageActivity.class);
                 startActivity(intent);
             }
         });

@@ -17,15 +17,8 @@
             android:layout_width="fill_parent"
             android:layout_height="150dp"
             android:id="@+id/ShowImageView"
-            android:layout_marginTop="20dp"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/ButtonChooseImage"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_background"
-            android:text="@string/choose_btn"/>
+            android:src="@drawable/ic_baseline_add_photo_24"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name"

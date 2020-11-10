@@ -51,7 +51,7 @@ public class ImageUploadActivity extends AppCompatActivity {
     static final String Database_Path = "Jewelleries";
     static final String OPTIONS = "Options";
     String imageLatest, selectedCategory, selectedSubCategory, selectedSubCategory1, selectedSubCategory2;
-    Button chooseButton, uploadButton;
+    Button uploadButton;
     EditText imageName;
     ImageView selectImage;
     Spinner imageCategory, imageSubCategory, imageSubCategory1, imageSubCategory2;
@@ -69,7 +69,6 @@ public class ImageUploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
-        chooseButton = (Button) findViewById(R.id.ButtonChooseImage);
         uploadButton = (Button) findViewById(R.id.ButtonUploadImage);
         imageName = (EditText) findViewById(R.id.ImageNameEditText);
         imageCategory = (Spinner) findViewById(R.id.spinnerCategory);
@@ -82,13 +81,11 @@ public class ImageUploadActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         optionsReference = FirebaseDatabase.getInstance().getReference().child(OPTIONS);
         setMainCategories();
-        chooseButton.setOnClickListener(new View.OnClickListener() {
+        selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -146,7 +143,6 @@ public class ImageUploadActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathUri);
                 selectImage.setImageBitmap(bitmap);
-                chooseButton.setText("Image Selected");
             } catch (IOException e) {
                 e.printStackTrace();
             }

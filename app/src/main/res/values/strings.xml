@@ -27,10 +27,12 @@
     <string name="text_view1">Check your Jewelry design</string>
     <string name="text_tab2">Upload Jewelry</string>
     <string name="text_view2">Upload Jewelry designs</string>
-    <string name="text_tab3">Quotation Form</string>
-    <string name="text_view3">Quotation generator of the Jewelry</string>
-    <string name="text_tab4">Contacted persons</string>
-    <string name="text_view4">Details of the customer contacted</string>
+    <string name="text_tab3">Gold &amp; Silver Rates</string>
+    <string name="text_view3">Add Gold and Silver rates</string>
+    <string name="text_tab4">Slider Images</string>
+    <string name="text_view4">Add the slider images for website</string>
+    <string name="text_tab5">Enquiries</string>
+    <string name="text_view5">Details of the customer enquired</string>
 
     <!-- Strings used in upload image activity -->
     <string name="Category">Category</string>
@@ -53,5 +55,11 @@
     <string name="generateBtn">Generate PDF</string>
     <string name="openBtn">Open PDF</string>
     <string name="title_activity_splash_screen">splashScreen</string>
+
+    <!-- Strings used in Gold and Silver rates -->
+    <string name="rate_title">Add Gold and Silver Rates</string>
+    <string name="gold_rate">Gold Rate</string>
+    <string name="silver_rate">Silver Rate</string>
+    <string name="submitBtn">Submit</string>
 
 </resources>
