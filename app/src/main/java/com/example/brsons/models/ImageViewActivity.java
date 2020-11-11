@@ -52,6 +52,9 @@ public class ImageViewActivity extends AppCompatActivity {
         GetDataFromFirebase();
     }
 
+    /**
+     * Calling method to retreive images from Firebase database.
+     */
     private void GetDataFromFirebase() {
 
         databaseReference.addValueEventListener(new ValueEventListener() {

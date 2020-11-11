@@ -60,6 +60,16 @@
     <string name="rate_title">Add Gold and Silver Rates</string>
     <string name="gold_rate">Gold Rate</string>
     <string name="silver_rate">Silver Rate</string>
+    <string name="gold_text">Gold Rate:</string>
+    <string name="sliver_text">Silver Rate:</string>
     <string name="submitBtn">Submit</string>
+
+    <!-- Strings used in Slider activity -->
+    <string name="title1">Slider Title1</string>
+    <string name="title2">Slider Title2</string>
+    <string name="title3">Slider Title3</string>
+    <string name="desc1">Slider Description1</string>
+    <string name="desc2">Slider Description2</string>
+    <string name="desc3">Slider Description3</string>
 
 </resources>

@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="500dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -37,7 +38,7 @@
                     android:id="@+id/title1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Title1"
+                    android:hint="@string/title1"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -61,7 +62,7 @@
                     android:id="@+id/desc1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Description1"
+                    android:hint="@string/desc1"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -99,7 +100,7 @@
                     android:id="@+id/title2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Title2"
+                    android:hint="@string/title2"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -123,7 +124,7 @@
                     android:id="@+id/desc2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Description2"
+                    android:hint="@string/desc2"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -160,7 +161,7 @@
                     android:id="@+id/title3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Title3"
+                    android:hint="@string/title3"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -184,7 +185,7 @@
                     android:id="@+id/desc3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Slider Description3"
+                    android:hint="@string/desc3"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:layout_marginTop="5dp"
@@ -215,9 +216,25 @@
                 android:layout_marginTop="20dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/button_background"
-                android:text="Upload"
+                android:text="@string/upload_btn"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/recyclerViewSlider"
+                android:layout_marginTop="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"/>
+
+
+
 
         </RelativeLayout>
 

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -16,19 +15,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.brsons.R;
+import com.example.brsons.adapter.RecyclerAdapter;
+import com.example.brsons.adapter.SliderAdapter;
+import com.example.brsons.pojo.ImageUploadInfo;
 import com.example.brsons.pojo.SliderImageInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SliderImageActivity extends AppCompatActivity {
 
@@ -48,10 +57,18 @@ public class SliderImageActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     Button UploadButton;
 
+    List<SliderImageInfo> Sliderlist = new ArrayList<>();
+    RecyclerView SliderRecyclerView;
+    private RecyclerView.Adapter sliderRecyclerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slider_image);
+
+        SliderRecyclerView = findViewById(R.id.recyclerViewSlider);
+        SliderRecyclerView.setHasFixedSize(true);
+        SliderRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
         UploadButton = (Button) findViewById(R.id.sliderUploadBtn);
 
@@ -70,6 +87,9 @@ public class SliderImageActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
 
+        /**
+         * Calling method to select image gallery.
+         */
         SliderImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +101,9 @@ public class SliderImageActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /**
+         * Calling method to select image gallery.
+         */
         SliderImage2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +115,9 @@ public class SliderImageActivity extends AppCompatActivity {
                 }
             }
         });
-
+        /**
+        * Calling method to select image gallery.
+        */
         SliderImage3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +144,34 @@ public class SliderImageActivity extends AppCompatActivity {
             }
         });
 
+        GetDataFromFirebase();
+
+    }
+
+    /**
+     * Method to retreive the uploaded image from fire base database
+     */
+    private void GetDataFromFirebase() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    SliderImageInfo imageUploadInfo = snapshot.getValue(SliderImageInfo.class);
+                    Sliderlist.add(imageUploadInfo);
+                }
+                sliderRecyclerAdapter = new SliderAdapter(getApplicationContext(), Sliderlist);
+                SliderRecyclerView.setAdapter(sliderRecyclerAdapter);
+                progressDialog.dismiss();
+                final SliderAdapter adapter = new SliderAdapter(SliderImageActivity.this, Sliderlist);
+                SliderRecyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressDialog.dismiss();
+
+            }
+        });
     }
 
     @Override

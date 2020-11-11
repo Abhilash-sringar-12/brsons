@@ -6,6 +6,9 @@ public class SliderImageInfo {
     private String sliderDesc;
     private String sliderImageURL;
 
+    public SliderImageInfo() {
+    }
+
     public SliderImageInfo(String sliderTitle, String sliderDesc, String sliderImageURL) {
         this.sliderTitle = sliderTitle;
         this.sliderDesc = sliderDesc;

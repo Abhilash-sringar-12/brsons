@@ -1,9 +1,13 @@
 package com.example.brsons.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private Context mContext;
     private List<ImageUploadInfo> MainImageUploadInfoList;
     private List<ImageUploadInfo> filteredObjects;
+
 
     public RecyclerAdapter(Context mContext, List<ImageUploadInfo> imageUploadInfo) {
         this.mContext = mContext;
@@ -43,14 +49,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final ImageUploadInfo UploadInfo = MainImageUploadInfoList.get(position);
         holder.textView.setText(UploadInfo.getImageName());
         Glide.with(mContext).load(UploadInfo.getImageURL()).into(holder.jewel_image);
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, UploadInfo.getImageName()+" clicked", Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View view) {
+             //   Toast.makeText(mContext, UploadInfo.getImageName()+" clicked", Toast.LENGTH_SHORT).show();
+
+                PopupMenu pop = new PopupMenu(mContext, view);
+                MenuInflater inflater = pop.getMenuInflater();
+
+                inflater.inflate(R.menu.menu_image_options,pop.getMenu());
+
+                pop.show();
+
+                return true;
             }
         });
     }
@@ -60,7 +75,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return MainImageUploadInfoList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView jewel_image;
         public TextView textView;
@@ -71,6 +86,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             jewel_image = itemView.findViewById(R.id.jewel_image);
             textView = itemView.findViewById(R.id.textView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.jewelryList);
+
         }
     }
 
@@ -106,4 +122,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public Filter getFilter() {
         return filterByJewelryName;
     }
+
+
 }
