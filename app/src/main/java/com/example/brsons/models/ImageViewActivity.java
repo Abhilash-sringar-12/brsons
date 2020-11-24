@@ -10,6 +10,7 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,9 @@ public class ImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
+        Toolbar toolbar = findViewById(R.id.toolbarView);
+        setSupportActionBar(toolbar);
+
         searchView = findViewById(R.id.searchJewelry);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

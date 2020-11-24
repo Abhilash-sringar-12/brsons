@@ -36,11 +36,22 @@
         </provider>
 
         <activity android:name=".models.ResetPasswordActivity" />
-        <activity android:name=".models.ImageViewActivity" />
-        <activity android:name=".models.ImageUploadActivity" />
-        <activity android:name=".models.EnquireFormActivity" />
-        <activity android:name=".models.RateActivity" />
-        <activity android:name=".models.SliderImageActivity" />
+        <activity android:name=".models.ImageViewActivity"
+            android:label="Jewellery Images"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".models.ImageUploadActivity"
+            android:label="Upload Jewellery Images"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".models.EnquiredUserActivity"
+            android:label="Enquired Users"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".models.RateActivity"
+            android:label="Gold and Silver Rates"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".models.SliderImageActivity"
+            android:label="Slider Images"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".models.EnquiryFormActivity"/>
         <activity
             android:name=".models.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">

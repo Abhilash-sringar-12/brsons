@@ -46,7 +46,10 @@
     <string name="quotation">Quotation Form</string>
     <string name="customer">Customer</string>
     <string name="email">Email</string>
+    <string name="phone">Phone</string>
     <string name="product">Product</string>
+    <string name="category">Category</string>
+    <string name="desc">Description</string>
     <string name="grams">Grams</string>
     <string name="price_gram">Price/gram</string>
     <string name="gst">GST</string>

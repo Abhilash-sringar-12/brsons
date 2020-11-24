@@ -15,13 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.brsons.R;
-import com.example.brsons.adapter.RecyclerAdapter;
 import com.example.brsons.adapter.SliderAdapter;
-import com.example.brsons.pojo.ImageUploadInfo;
 import com.example.brsons.pojo.SliderImageInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -65,6 +64,8 @@ public class SliderImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slider_image);
+        Toolbar toolbar = findViewById(R.id.toolbarSlider);
+        setSupportActionBar(toolbar);
 
         SliderRecyclerView = findViewById(R.id.recyclerViewSlider);
         SliderRecyclerView.setHasFixedSize(true);
@@ -246,7 +247,7 @@ public class SliderImageActivity extends AppCompatActivity {
                                 String tempSliderImageUrl1 = uri.toString();
                                 progressDialog.dismiss();
                                 setSliderData(tempSliderTitle1, tempSliderDesc1, tempSliderImageUrl1, "slider1");
-                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Slider Image1 Uploaded Successfully ", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -268,7 +269,6 @@ public class SliderImageActivity extends AppCompatActivity {
      * set slider 2 details
      */
     private void setSliderTwoDetails() {
-
         final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUriTwo));
         storageReference2nd.putFile(FilePathUriTwo)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -282,7 +282,7 @@ public class SliderImageActivity extends AppCompatActivity {
                                 String tempSliderImageUrl2 = uri.toString();
                                 progressDialog.dismiss();
                                 setSliderData(tempSliderTitle2, tempSliderDesc2, tempSliderImageUrl2, "slider2");
-                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Slider Image2 Uploaded Successfully ", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -304,7 +304,6 @@ public class SliderImageActivity extends AppCompatActivity {
      * set slider 3 details
      */
     private void setSliderThreeDetails() {
-
         final StorageReference storageReference3 = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUriThree));
         storageReference3.putFile(FilePathUriThree)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -318,8 +317,8 @@ public class SliderImageActivity extends AppCompatActivity {
                                 String tempSliderImageUrl3 = uri.toString();
                                 progressDialog.dismiss();
                                 setSliderData(tempSliderTitle3, tempSliderDesc3, tempSliderImageUrl3, "slider3");
-                                Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(getApplicationContext(), "Slider Image3 Uploaded Successfully ", Toast.LENGTH_LONG).show();
+                                refresh();
                             }
                         });
                     }
@@ -335,5 +334,11 @@ public class SliderImageActivity extends AppCompatActivity {
                 progressDialog.setTitle("Slider Image is Uploading...");
             }
         });
+    }
+
+    private void refresh() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 }

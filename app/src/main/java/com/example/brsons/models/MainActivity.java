@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         enquiry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EnquireFormActivity.class);
+                Intent intent = new Intent(MainActivity.this, EnquiredUserActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,14 +82,10 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                break;
-            case R.id.action_logout:
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                break;
+        if (item.getItemId() == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
         return true;
     }

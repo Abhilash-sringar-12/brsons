@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.brsons.R;
 import com.example.brsons.pojo.RateInfo;
@@ -35,6 +36,8 @@ public class RateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate);
+        Toolbar toolbar = findViewById(R.id.toolbarRate);
+        setSupportActionBar(toolbar);
 
         submit = (Button) findViewById(R.id.submit);
         GoldRate = (EditText) findViewById(R.id.goldRate);

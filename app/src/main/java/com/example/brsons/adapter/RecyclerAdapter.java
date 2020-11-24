@@ -2,9 +2,12 @@ package com.example.brsons.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -20,7 +23,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.brsons.R;
+import com.example.brsons.models.EnquiryFormActivity;
+import com.example.brsons.models.ImageUploadActivity;
 import com.example.brsons.pojo.ImageUploadInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.mContext = mContext;
         this.MainImageUploadInfoList = imageUploadInfo;
         this.filteredObjects = new ArrayList<>(MainImageUploadInfoList);
+
     }
 
     @NonNull
@@ -49,20 +64,47 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final ImageUploadInfo UploadInfo = MainImageUploadInfoList.get(position);
         holder.textView.setText(UploadInfo.getImageName());
         Glide.with(mContext).load(UploadInfo.getImageURL()).into(holder.jewel_image);
+      //  databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
         holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
              //   Toast.makeText(mContext, UploadInfo.getImageName()+" clicked", Toast.LENGTH_SHORT).show();
 
-                PopupMenu pop = new PopupMenu(mContext, view);
-                MenuInflater inflater = pop.getMenuInflater();
+                final PopupMenu pop = new PopupMenu(mContext, view);
 
-                inflater.inflate(R.menu.menu_image_options,pop.getMenu());
+                pop.inflate(R.menu.menu_image_options);
+                pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
 
+                        if (item.getItemId() == R.id.item_delete_options) {
+                        //    MainImageUploadInfoList.remove(position);
+                        //    notifyDataSetChanged();
+                        //    Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
+
+                        }
+                        if (item.getItemId() == R.id.item_edit_options) {
+
+                            final Intent intent;
+                            intent =  new Intent(mContext, ImageUploadActivity.class);
+                            intent.putExtra("imageName", UploadInfo.getImageName());
+                            intent.putExtra("imageCategory", UploadInfo.getImageCategory());
+                            intent.putExtra("imageSubCategory", UploadInfo.getImageSubCategory());
+                            intent.putExtra("imageSubCategory1", UploadInfo.getImageSubCategory1());
+                            intent.putExtra("imageURL", UploadInfo.getImageURL());
+                            intent.putExtra("imageLatest", UploadInfo.getImageLatest());
+                            mContext.startActivity(intent);
+
+                        }
+                        return false;
+                    }
+                });
                 pop.show();
 
                 return true;
@@ -86,7 +128,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             jewel_image = itemView.findViewById(R.id.jewel_image);
             textView = itemView.findViewById(R.id.textView);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.jewelryList);
-
         }
     }
 

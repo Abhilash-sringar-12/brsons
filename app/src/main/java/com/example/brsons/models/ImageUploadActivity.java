@@ -22,7 +22,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.brsons.pojo.ImageUploadInfo;
 import com.example.brsons.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,6 +71,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
+        Toolbar toolbar = findViewById(R.id.toolbarUpload);
+        setSupportActionBar(toolbar);
+
         uploadButton = (Button) findViewById(R.id.ButtonUploadImage);
         imageName = (EditText) findViewById(R.id.ImageNameEditText);
         imageCategory = (Spinner) findViewById(R.id.spinnerCategory);
@@ -80,6 +85,21 @@ public class ImageUploadActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         optionsReference = FirebaseDatabase.getInstance().getReference().child(OPTIONS);
+
+        Intent startingIntent = getIntent();
+        String imgName = startingIntent.getStringExtra("imageName");
+        int imgCategory = startingIntent.getIntExtra("imageCategory", 0);
+        int imgSubCategory = startingIntent.getIntExtra("imageSubCategory",0);
+        int imgSubCategory1 = startingIntent.getIntExtra("imageSubCategory1",0);
+        String imgURL = startingIntent.getStringExtra("imageURL");
+        String imgLat = startingIntent.getStringExtra("imageLatest");
+        imageName.setText(imgName);
+        imageCategory.setSelection(imgCategory, true);
+        imageSubCategory.setSelection(imgSubCategory, true);
+        imageSubCategory1.setSelection(imgSubCategory1, true);
+        Glide.with(this).load(imgURL).into(selectImage);
+        latestProduct.setText(imgLat);
+
         setMainCategories();
         selectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +153,12 @@ public class ImageUploadActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void refresh() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     @Override
@@ -189,6 +215,7 @@ public class ImageUploadActivity extends AppCompatActivity {
                                             TempSubCategoryName, TempSubCategoryName1, imageLatest, uri.toString());
                                     String ImageUploadId = databaseReference.push().getKey();
                                     databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
+                                    refresh();
                                 }
                             });
                         }
@@ -205,7 +232,8 @@ public class ImageUploadActivity extends AppCompatActivity {
                 }
             });
         }
-        startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
+
+     //  startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
     }
 
     /**
