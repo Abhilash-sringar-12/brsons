@@ -11,12 +11,12 @@ public class ImageUploadInfo {
     private String imageSubCategory;
     private String imageSubCategory1;
     private String imageURL;
-    private String imageLatest;
+    private Boolean imageLatest;
 
     public ImageUploadInfo() {
     }
 
-    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName, String tempSubCategoryName1, String imageLatest, String imageURL) {
+    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName, String tempSubCategoryName1, Boolean imageLatest, String imageURL) {
         this.imageName = tempImageName;
         this.imageCategory = tempCategoryName;
         this.imageSubCategory = tempSubCategoryName;
@@ -65,11 +65,11 @@ public class ImageUploadInfo {
         this.imageURL = imageURL;
     }
 
-    public String getImageLatest() {
+    public Boolean getImageLatest() {
         return imageLatest;
     }
 
-    public void setImageLatest(String imageLatest) {
+    public void setImageLatest(Boolean imageLatest) {
         this.imageLatest = imageLatest;
     }
 

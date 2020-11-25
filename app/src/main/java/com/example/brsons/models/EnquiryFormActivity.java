@@ -83,7 +83,7 @@ public class EnquiryFormActivity extends AppCompatActivity {
             public void onClick(View view) {
                     createPdf();
                 Intent intent =  new Intent(EnquiryFormActivity.this, EnquiredUserActivity.class);
-                //intent.putExtra("resolved",status);
+                intent.putExtra("resolved",status);
                 startActivity(intent);
             }
         });

@@ -52,7 +52,11 @@ public class ImageUploadActivity extends AppCompatActivity {
     final String Storage_Path = "Jewellery_Image/";
     static final String Database_Path = "Jewelleries";
     static final String OPTIONS = "Options";
-    String imageLatest, selectedCategory, selectedSubCategory, selectedSubCategory1, selectedSubCategory2;
+    boolean imageLatest;
+    String selectedCategory;
+    String selectedSubCategory;
+    String selectedSubCategory1;
+    String selectedSubCategory2;
     Button uploadButton;
     EditText imageName;
     ImageView selectImage;
@@ -87,18 +91,25 @@ public class ImageUploadActivity extends AppCompatActivity {
         optionsReference = FirebaseDatabase.getInstance().getReference().child(OPTIONS);
 
         Intent startingIntent = getIntent();
-        String imgName = startingIntent.getStringExtra("imageName");
-        int imgCategory = startingIntent.getIntExtra("imageCategory", 0);
-        int imgSubCategory = startingIntent.getIntExtra("imageSubCategory",0);
-        int imgSubCategory1 = startingIntent.getIntExtra("imageSubCategory1",0);
-        String imgURL = startingIntent.getStringExtra("imageURL");
-        String imgLat = startingIntent.getStringExtra("imageLatest");
-        imageName.setText(imgName);
-        imageCategory.setSelection(imgCategory, true);
-        imageSubCategory.setSelection(imgSubCategory, true);
-        imageSubCategory1.setSelection(imgSubCategory1, true);
-        Glide.with(this).load(imgURL).into(selectImage);
-        latestProduct.setText(imgLat);
+        if (getIntent().hasExtra("imageURL")) {
+            String imgURL = startingIntent.getStringExtra("imageURL");
+            String imgName = startingIntent.getStringExtra("imageName");
+            int imgCategory = startingIntent.getIntExtra("imageCategory",0);
+            int imgSubCategory = startingIntent.getIntExtra("imageSubCategory", 0);
+            int imgSubCategory1 = startingIntent.getIntExtra("imageSubCategory1", 0);
+            Glide.with(this).load(imgURL).into(selectImage);
+            imageName.setText(imgName);
+            imageCategory.setSelection(imgCategory);
+            imageSubCategory.setSelection(imgSubCategory, true);
+            imageSubCategory1.setSelection(imgSubCategory1, true);
+
+            Boolean imgLat = startingIntent.getBooleanExtra("imageLatest",true);
+            if (imgLat.equals(true)) {
+                latestProduct.setChecked(true);
+            } else {
+                latestProduct.setChecked(false);
+            }
+        }
 
         setMainCategories();
         selectImage.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +218,10 @@ public class ImageUploadActivity extends AppCompatActivity {
                                     String TempSubCategoryName = imageSubCategory.getSelectedItem().toString().trim();
                                     String TempSubCategoryName1 = imageSubCategory1.getSelectedItem().toString().trim();
                                     if (latestProduct.isChecked()) {
-                                        imageLatest = latestProduct.getText().toString().trim();
+                                        //latestProduct.setEnabled(true);
+                                        imageLatest = true;
+                                    }else {
+                                        imageLatest = false;
                                     }
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
