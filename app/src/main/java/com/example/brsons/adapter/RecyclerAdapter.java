@@ -87,9 +87,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     public boolean onMenuItemClick(MenuItem item) {
 
                         if (item.getItemId() == R.id.item_delete_options) {
-                        //    MainImageUploadInfoList.remove(position);
-                        //    notifyDataSetChanged();
-                        //    Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
+
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                            Query mQuery = ref.child("Jewelleries").orderByChild("imageName").equalTo(UploadInfo.getImageName());
+                            mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot Snapshot: dataSnapshot.getChildren()) {
+                                        Snapshot.getRef().removeValue();
+                                        MainImageUploadInfoList.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyDataSetChanged();
+                                        Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //Log.e(TAG, "onCancelled", databaseError.toException());
+                                    Toast.makeText(mContext, "Cancelled", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
                         if (item.getItemId() == R.id.item_edit_options) {
