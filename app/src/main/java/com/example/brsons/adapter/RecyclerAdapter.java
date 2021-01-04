@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.brsons.R;
 import com.example.brsons.models.EnquiryFormActivity;
+import com.example.brsons.models.ImageUpdateActivity;
 import com.example.brsons.models.ImageUploadActivity;
 import com.example.brsons.pojo.ImageUploadInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -71,13 +72,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         final ImageUploadInfo UploadInfo = MainImageUploadInfoList.get(position);
         holder.textView.setText(UploadInfo.getImageName());
         Glide.with(mContext).load(UploadInfo.getImageURL()).into(holder.jewel_image);
-      //  databaseReference = FirebaseDatabase.getInstance().getReference();
 
-
+        // long click listner for menu popup
         holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-             //   Toast.makeText(mContext, UploadInfo.getImageName()+" clicked", Toast.LENGTH_SHORT).show();
 
                 final PopupMenu pop = new PopupMenu(mContext, view);
 
@@ -92,7 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Query mQuery = ref.child("Jewelleries").orderByChild("imageName").equalTo(UploadInfo.getImageName());
                             mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot Snapshot: dataSnapshot.getChildren()) {
                                         Snapshot.getRef().removeValue();
                                         MainImageUploadInfoList.remove(position);
@@ -113,7 +112,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         if (item.getItemId() == R.id.item_edit_options) {
 
                             final Intent intent;
-                            intent =  new Intent(mContext, ImageUploadActivity.class);
+                            intent =  new Intent(mContext, ImageUpdateActivity.class);
+                            intent.putExtra("imageKey", UploadInfo.getImageKey());
                             intent.putExtra("imageName", UploadInfo.getImageName());
                             intent.putExtra("imageCategory", UploadInfo.getImageCategory());
                             intent.putExtra("imageSubCategory", UploadInfo.getImageSubCategory());

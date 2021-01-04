@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -16,26 +15,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.example.brsons.pojo.ImageUploadInfo;
 import com.example.brsons.R;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -45,9 +43,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Optional;
 
-public class ImageUploadActivity extends AppCompatActivity {
+public class ImageUpdateActivity extends AppCompatActivity {
 
     final String Storage_Path = "Jewellery_Image/";
     static final String Database_Path = "Jewelleries";
@@ -66,13 +63,12 @@ public class ImageUploadActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     List<String> mainCategoryKeys = new ArrayList();
     Map<String, Map<String, List<String>>> optionsMap = new HashMap<>();
+    String imgKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
-        Toolbar toolbar = findViewById(R.id.toolbarUpload);
-        setSupportActionBar(toolbar);
 
         uploadButton = (Button) findViewById(R.id.ButtonUploadImage);
         imageName = (EditText) findViewById(R.id.ImageNameEditText);
@@ -81,10 +77,16 @@ public class ImageUploadActivity extends AppCompatActivity {
         imageSubCategory1 = (Spinner) findViewById(R.id.spinnerSubCategory1);
         latestProduct = (CheckBox) findViewById(R.id.checkBox);
         selectImage = (ImageView) findViewById(R.id.ShowImageView);
-        progressDialog = new ProgressDialog(ImageUploadActivity.this);
+        progressDialog = new ProgressDialog(ImageUpdateActivity.this);
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path);
         optionsReference = FirebaseDatabase.getInstance().getReference().child(OPTIONS);
+
+        uploadButton.setText("Update");
+
+        Intent intent = getIntent();
+        imgKey = intent.getStringExtra("imageKey");
+
+        editactivity();
 
         setMainCategories();
         selectImage.setOnClickListener(new View.OnClickListener() {
@@ -138,13 +140,70 @@ public class ImageUploadActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-    private void refresh() {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+    private void UploadImageFileToFirebaseStorage() {
+        try {
+            String ImageName = imageName.getText().toString().trim();
+            final String CategoryName = imageCategory.getSelectedItem().toString().trim();
+            String SubCategoryName = imageSubCategory.getSelectedItem().toString().trim();
+            String SubCategoryName1 = imageSubCategory1.getSelectedItem().toString().trim();
+
+            if (latestProduct.isChecked()) {
+                imageLatest = true;
+            }else {
+                imageLatest = false;
+            }
+            progressDialog.setTitle("Image data is Updating...");
+            progressDialog.show();
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Database_Path).child(imgKey);
+            databaseReference.child("imageName").setValue(ImageName).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        databaseReference.child("imageLatest").setValue(imageLatest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    StorageReference fileReference = storageReference.child(Storage_Path + System.currentTimeMillis()+"."+ GetFileExtension(filePathUri));
+                                    fileReference.putFile(filePathUri)
+                                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                                                    while (!urlTask.isSuccessful());
+                                                    Uri downloadUrl = urlTask.getResult();
+
+                                                    databaseReference.child("imageURL").setValue(downloadUrl.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(ImageUpdateActivity.this, "Successfully Updated Product data", Toast.LENGTH_SHORT).show();
+                                                                Intent intent1 = new Intent(ImageUpdateActivity.this, ImageViewActivity.class);
+                                                                startActivity(intent1);
+                                                                finishAffinity();
+                                                            } else {
+                                                                Toast.makeText(ImageUpdateActivity.this, "Please Try again", Toast.LENGTH_SHORT).show();
+
+                                                            }
+
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+
+                                }
+
+                            }
+
+                            });
+                        }
+                    }
+            });
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -173,57 +232,27 @@ public class ImageUploadActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    /**
-     * Method to store the uploaded image in fire base storage location
-     */
-    public void UploadImageFileToFirebaseStorage() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Optional.ofNullable(filePathUri).isPresent()) {
-            progressDialog.setTitle("Image is Uploading...");
-            progressDialog.show();
-            final StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(filePathUri));
-            storageReference2nd.putFile(filePathUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                            storageReference2nd.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String TempImageName = imageName.getText().toString().trim();
-                                    String TempCategoryName = imageCategory.getSelectedItem().toString().trim();
-                                    String TempSubCategoryName = imageSubCategory.getSelectedItem().toString().trim();
-                                    String TempSubCategoryName1 = imageSubCategory1.getSelectedItem().toString().trim();
-                                    if (latestProduct.isChecked()) {
-                                        //latestProduct.setEnabled(true);
-                                        imageLatest = true;
-                                    }else {
-                                        imageLatest = false;
-                                    }
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                    String ImageUploadId = databaseReference.push().getKey();
-                                    ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, TempCategoryName,
-                                            TempSubCategoryName, TempSubCategoryName1, imageLatest, uri.toString(), ImageUploadId);
+    private void editactivity() {
+        Intent startingIntent = getIntent();
+        if (getIntent() != null ) {
+            String imgURL = startingIntent.getStringExtra("imageURL");
+            String imgName = startingIntent.getStringExtra("imageName");
+            int imgCategory = startingIntent.getIntExtra("imageCategory",0);
+            int imgSubCategory = startingIntent.getIntExtra("imageSubCategory", 0);
+            int imgSubCategory1 = startingIntent.getIntExtra("imageSubCategory1", 0);
+            Glide.with(this).load(imgURL).into(selectImage);
+            imageName.setText(imgName);
+            imageCategory.setSelection(imgCategory, true);
+            imageSubCategory.setSelection(imgSubCategory, true);
+            imageSubCategory1.setSelection(imgSubCategory1, true);
 
-                                    databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
-                                    refresh();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    progressDialog.dismiss();
-                    Toast.makeText(ImageUploadActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    progressDialog.setTitle("Image is Uploading...");
-                }
-            });
+            Boolean imgLat = startingIntent.getBooleanExtra("imageLatest",true);
+            if (imgLat.equals(true)) {
+                latestProduct.setChecked(true);
+            } else {
+                latestProduct.setChecked(false);
+            }
         }
-
-     //  startActivity(new Intent(ImageUploadActivity.this, ImageUploadActivity.class));
     }
 
     /**
@@ -297,10 +326,9 @@ public class ImageUploadActivity extends AppCompatActivity {
     Populate values to spinner
      */
     public void addOptions(List<String> keys, Spinner spinner) {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ImageUploadActivity.this, R.layout.simple_spinner_item, keys);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(ImageUpdateActivity.this, R.layout.simple_spinner_item, keys);
         dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(dataAdapter);
         spinner.setPrompt("Categories");
     }
 }
-

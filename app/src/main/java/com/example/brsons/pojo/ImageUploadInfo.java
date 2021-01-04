@@ -12,17 +12,28 @@ public class ImageUploadInfo {
     private String imageSubCategory1;
     private String imageURL;
     private Boolean imageLatest;
+    private String imageKey;
 
     public ImageUploadInfo() {
     }
 
-    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName, String tempSubCategoryName1, Boolean imageLatest, String imageURL) {
+    public ImageUploadInfo(String tempImageName, String tempCategoryName, String tempSubCategoryName, String tempSubCategoryName1, Boolean imageLatest, String imageURL,
+                           String ImageUploadId) {
         this.imageName = tempImageName;
         this.imageCategory = tempCategoryName;
         this.imageSubCategory = tempSubCategoryName;
         this.imageSubCategory1 = tempSubCategoryName1;
         this.imageLatest = imageLatest;
         this.imageURL = imageURL;
+        this.imageKey = ImageUploadId;
+    }
+
+    public String getImageKey() {
+        return imageKey;
+    }
+
+    public void setImageKey(String imageKey) {
+        this.imageKey = imageKey;
     }
 
     public String getImageName() {

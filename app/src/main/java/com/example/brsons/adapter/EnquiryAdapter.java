@@ -52,6 +52,7 @@ public class EnquiryAdapter extends RecyclerView.Adapter<EnquiryAdapter.EnquiryV
         holder.ActivityStatus.setText(enquireInfo.getStatus());
 
 
+        // click listener to start EnquiryFormActivity
         holder.ralativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

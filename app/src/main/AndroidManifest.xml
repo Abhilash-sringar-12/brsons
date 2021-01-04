@@ -51,6 +51,9 @@
         <activity android:name=".models.SliderImageActivity"
             android:label="Slider Images"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".models.ImageUpdateActivity"
+            android:label="Update Images"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".models.EnquiryFormActivity"/>
         <activity
             android:name=".models.LoginActivity"

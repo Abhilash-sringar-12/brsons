@@ -1,4 +1,4 @@
-package com.example.brsons.commons;
+package com.example.brsons.mailUtility;
 
 import android.os.AsyncTask;
 
@@ -7,10 +7,8 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -21,12 +19,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
-
-
 public class MailUtility {
 
     public MailUtility() {
-
     }
 
     public static void sendMail(String email, String subject, String messageBody, byte[] bytes) {

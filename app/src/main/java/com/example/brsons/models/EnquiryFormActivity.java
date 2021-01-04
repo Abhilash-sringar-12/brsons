@@ -1,5 +1,6 @@
 package com.example.brsons.models;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.brsons.R;
-import com.example.brsons.commons.MailUtility;
+import com.example.brsons.mailUtility.MailUtility;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -34,17 +35,55 @@ import java.io.IOException;
 
 public class EnquiryFormActivity extends AppCompatActivity {
 
-    private static final String MESSAGE_BODY = "Dear Customer,\n" +
-            "Thank you for contacting us. \n " +
-            "Please find the attachment of the requested quotation.\n" +
-            "Any more quiries please free to contact us by email or through phone.\n" +
-            "Thanks and Regards \n" +
-            "BRSons and Jewellery  ";
+    private static final String MESSAGE_BODY = "\"<head>\\n\" +\n" +
+            "                                                                \"<title>BRSons and Jewellery</title>\\n\" +\n" +
+            "                                                                \"<meta content=\\\"text/html; charset=utf-8\\\" http-equiv=\\\"Content-Type\\\">\\n\" +\n" +
+            "                                                                \"<meta content=\\\"width=device-width\\\" name=\\\"viewport\\\">\\n\" +\n" +
+            "                                                                \"\\n\" +\n" +
+            "                                                                \"</head>\\n\" +\n" +
+            "                                                                \"<body style=\\\"background-color: #f4f4f5;\\\">\\n\" +\n" +
+            "                                                                \"<table cellpadding=\\\"0\\\" cellspacing=\\\"0\\\" style=\\\"width: 100%; height: 100%; background-color: #f4f4f5; text-align: center;\\\">\\n\" +\n" +
+            "                                                                \"<tbody><tr>\\n\" +\n" +
+            "                                                                \"<td style=\\\"text-align: center;\\\">\\n\" +\n" +
+            "                                                                \"<table align=\\\"center\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\" id=\\\"body\\\" style=\\\"background-color: #fff; width: 100%; max-width: 680px; height: 100%;\\\">\\n\" +\n" +
+            "                                                                \"<tbody><tr>\\n\" +\n" +
+            "                                                                \"<td>\\n\" +\n" +
+            "                                                                \"<table align=\\\"center\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\" class=\\\"page-center\\\" style=\\\"text-align: left; padding-bottom: 88px; width: 100%; padding-left: 120px; padding-right: 120px;\\\">\\n\" +\n" +
+            "                                                                \"<tbody><tr>\\n\" +\n" +
+            "                                                                \"<td style=\\\"padding-top: 24px;\\\">\\n\" +\n" +
+            "                                                                \"<img src=\\\"drawable/logo.png\\\" style=\\\"width: auto;\\\">\\n\" +\n" +
+            "                                                                \"</td>\\n\" +\n" +
+            "                                                                \"</tr>\\n\" +\n" +
+            "                                                                \"<tr>\\n\" +\n" +
+            "                                                                \"<td colspan=\\\"2\\\" style=\\\"padding-top: 72px; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; color: #000000; font-family: 'Postmates Std', 'Helvetica', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; font-size: 15px; font-smoothing: always; font-style: normal; font-weight: 600; letter-spacing: -1.6px; line-height: 52px; mso-line-height-rule: exactly; text-decoration: none;\\\">Thank you for choosing Labsoluntions Instruments & Consultancy pvt ltd</td>\\n\" +\n" +
+            "                                                                \"</tr>\\n\" +\n" +
+            "                                                                \"<tr>\\n\" +\n" +
+            "                                                                \"  <td>\"Thank you for contacting us. \\n \" +\n" +
+            "                                                                \"Please find the attachment of the requested quotation.\\n\" +\n" +
+            "                                                                \"Any more quiries please free to contact us by email or through phone.\\n\" </td>\\n\" +\n" +
+            "                                                                \"  </tr>\\n\" +\n" +
+            "                                                                \"<tr>\\n\" +\n" +
+            "                                                                \"<td style=\\\"padding-top: 48px; padding-bottom: 48px;\\\">\\n\" +\n" +
+            "                                                                \"<table cellpadding=\\\"0\\\" cellspacing=\\\"0\\\" style=\\\"width: 100%\\\">\\n\" +\n" +
+            "                                                                \"<tbody><tr>\\n\" +\n" +
+            "                                                                \"<td style=\\\"width: 100%; height: 1px; max-height: 1px; background-color: #d9dbe0; opacity: 0.81\\\"></td>\\n\" +\n" +
+            "                                                                \"</tr>\\n\" +\n" +
+            "                                                                \"</tbody></table>\\n\" +\n" +
+            "                                                                \"</td>\\n\" +\n" +
+            "                                                                \"</tr>\\n\" +\n" +
+            "                                                                \"</tbody></table>\\n\" +\n" +
+            "                                                                \"</td>\\n\" +\n" +
+            "                                                                \"</tr>\\n\" +\n" +
+            "                                                                \"</tbody></table>\\n\" +\n" +
+            "                                                                \"\\n\" +\n" +
+            "                                                                \"\\n\" +\n" +
+            "                                                                \"\\n\" +\n" +
+            "                                                                \"</body>\";";
 
 
     EditText clientName,clientEmail, clientPhone, productCategory, productDesc, grams, gramPrice, gstValue, itemAmount, itemTotal;
     Button generateButton;
-
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,16 +120,29 @@ public class EnquiryFormActivity extends AppCompatActivity {
         generateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(EnquiryFormActivity.this);
+                progressDialog.setMessage("Creating PDF and sending email..");
+                progressDialog.show();
                     createPdf();
+                 //   statusChange();
                 Intent intent =  new Intent(EnquiryFormActivity.this, EnquiredUserActivity.class);
-                intent.putExtra("resolved",status);
                 startActivity(intent);
+
             }
         });
-
-
     }
 
+ /**   private void statusChange() {
+        try {
+            String ImageName = "Resolved";
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    } */
+
+    /*
+     *  Method to create a PDF and send and email
+     */
     private void createPdf() {
 
         try {
@@ -235,6 +287,7 @@ public class EnquiryFormActivity extends AppCompatActivity {
             document.close();
             byte[] bytes = outputStream.toByteArray();
             MailUtility.sendMail(clientEmail.getText().toString(), "BRSons Quotation Report", MESSAGE_BODY, bytes);
+            progressDialog.dismiss();
             Toast.makeText(EnquiryFormActivity.this, "Pdf Created and Sent Email...", Toast.LENGTH_SHORT).show();
 
         } catch (IOException e) {
@@ -247,7 +300,9 @@ public class EnquiryFormActivity extends AppCompatActivity {
         refresh();
     }
 
-
+    /*
+     *  Heading of the table cell
+     */
     public static PdfPCell getBillHeaderCell(String text) {
         FontSelector fs = new FontSelector();
         Font font = FontFactory.getFont(FontFactory.HELVETICA, 11);
